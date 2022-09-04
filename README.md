@@ -1,1 +1,1 @@
-# twitch_automation
+# flippa-auto-scrape
