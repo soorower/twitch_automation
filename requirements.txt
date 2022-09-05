@@ -18,5 +18,3 @@ oauth2client==4.1.3
 gspread==3.5.0
 boto3==1.17.100
 botocore==1.20.100
-chromedriver-autoinstaller==0.3.0
-selenium==4.0.0
