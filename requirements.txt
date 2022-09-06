@@ -18,4 +18,4 @@ oauth2client==4.1.3
 gspread==3.5.0
 boto3==1.17.100
 botocore==1.20.100
-llvmlite==0.32.0
+llvmlite==0.30.0
