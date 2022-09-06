@@ -69,6 +69,7 @@ while True:
             else:
                 if 'English' in tags:
                     print(name)
+                    print(tags)
                     names.append(name)
                 tags = []
         except:
