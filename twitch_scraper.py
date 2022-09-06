@@ -19,10 +19,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
-
-
-
-
 driver.maximize_window()
 
 
@@ -31,102 +27,78 @@ driver.maximize_window()
 # game_url = 'https://m.twitch.tv/directory/game/VALORANT'
 # game_url = str(input('Enter Game URL(ex. https://m.twitch.tv/directory/game/Minecraft): ')).replace('m.twitch','www.twitch')
 
-game_url = 'https://www.twitch.tv/directory/all/tags/English'
-
+game_url = 'https://m.twitch.tv/directory/all'
 game_name = game_url.split('/')[-1].replace('%20',' ')
 driver.get(game_url)
 sleep(1)
-element = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//input[@placeholder='Search Tags']"))
-    )
+
 
 names = []
 count = 1
-num  = 20
 while True:
-    sleep(1)
-    print(f'Scrolling number: {count}')
+    print(f'scraping page: {count}')
+    if count>5000:
+        break
     prev_len = len(names)
     count = count + 1
-    if count == 5000:
-        break
     try:
-        try:
-            element=driver.find_element(By.XPATH, value = f"//div[@class='ScTower-sc-1dei8tr-0 dcmlaV tw-tower']/div[{num}]")
-            
-            element.location_once_scrolled_into_view
-            num = num + 20
-            element = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, f"//div[@class='ScTower-sc-1dei8tr-0 dcmlaV tw-tower']/div[{num}]"))
-            )
-        except:
-            num = num - 10
-            element=driver.find_element(By.XPATH, value = f"//div[@class='ScTower-sc-1dei8tr-0 dcmlaV tw-tower']/div[{num}]")
-            
-            element.location_once_scrolled_into_view
-            num = num + 30
-            element = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, f"//div[@class='ScTower-sc-1dei8tr-0 dcmlaV tw-tower']/div[{num}]"))
-            )
+        element=driver.find_element_by_xpath("//*[@id='__next']/div/div/div/main/div[2]/div/div/div[7]")
+        element.location_once_scrolled_into_view
     except:
-        print('break')
-        break
-   
+        element=driver.find_element_by_xpath("//*[@id='__next']/div/div/div/main/div[2]/div/div/div[6]")
+        element.location_once_scrolled_into_view
+    sleep(1)
     soup = bs(driver.page_source,'html.parser')
-    main_divs = soup.findAll('p',attrs = {'class':'CoreText-sc-cpl358-0 eyuUlK'})
-    for div in main_divs:
+    divs = soup.findAll('div',attrs= {'class':'Layout-sc-nxg1ff-0 kmugYy'})
+    for div in divs:
         try:
-            name = div.text.strip()
+            name = div.findAll('p')[1].text
+            try:
+                tags = []
+                for tag in div.findAll('a',attrs ={'class':'ScTag-sc-xzp4i-0 kpyriW tw-tag'}):
+                    tags.append(tag.text.strip())
+            except:
+                tags = []
             if name in names:
                 pass
             else:
-                names.append(name)
+                if 'English' in tags:
+                    names.append(name)
         except:
             pass
-    if len(names) == prev_len:
-        sleep(4)
-        print(f'Scrolling number: {count}.')
+    if len(names)== prev_len:
+        sleep(2.5)
+        print(f'scraping page: {count}.')
         prev_len = len(names)
         count = count + 1
-        if count == 5000:
-            break
         try:
-            try:
-                element=driver.find_element(By.XPATH, value = f"//div[@class='ScTower-sc-1dei8tr-0 dcmlaV tw-tower']/div[{num}]")
-                
-                element.location_once_scrolled_into_view
-                num = num + 20
-                element = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.XPATH, f"//div[@class='ScTower-sc-1dei8tr-0 dcmlaV tw-tower']/div[{num}]"))
-                )
-            except:
-                num = num - 10
-                element=driver.find_element(By.XPATH, value = f"//div[@class='ScTower-sc-1dei8tr-0 dcmlaV tw-tower']/div[{num}]")
-                
-                element.location_once_scrolled_into_view
-                num = num + 30
-                element = WebDriverWait(driver, 10).until(
-                    EC.presence_of_element_located((By.XPATH, f"//div[@class='ScTower-sc-1dei8tr-0 dcmlaV tw-tower']/div[{num}]"))
-                )
+            element=driver.find_element_by_xpath("//*[@id='__next']/div/div/div/main/div[2]/div/div/div[7]")
+            element.location_once_scrolled_into_view
         except:
-            print('break')
-            break
-    
+            element=driver.find_element_by_xpath("//*[@id='__next']/div/div/div/main/div[2]/div/div/div[6]")
+            element.location_once_scrolled_into_view
         soup = bs(driver.page_source,'html.parser')
-        main_divs = soup.findAll('p',attrs = {'class':'CoreText-sc-cpl358-0 eyuUlK'})
-        for div in main_divs:
+        divs = soup.find('div',attrs= {'role':'list'}).findAll('div')
+        for div in divs:
             try:
-                name = div.text.strip()
+                name = div.findAll('p')[1].text
+                try:
+                    tags = []
+                    for tag in div.findAll('a',attrs ={'class':'ScTag-sc-xzp4i-0 kpyriW tw-tag'}):
+                        tags.append(tag.text.strip())
+                except:
+                    tags = []
                 if name in names:
                     pass
                 else:
-                    names.append(name)
+                    if 'English' in tags:
+                        names.append(name)
             except:
                 pass
-        if len(names) == prev_len:
-            print('No more profile URL found. Scraping Each Profle Started...\n')
+        if len(names)== prev_len:
+            print('No more profiles. So, scraping all profiles...')
             break
-    # print(len(names))
+
 
 
 #---------------------Each Profile Scrape about section------------------------------------
