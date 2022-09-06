@@ -1,3 +1,4 @@
+from ssl import Options
 from time import sleep
 import pandas as pd
 from bs4 import BeautifulSoup as bs
@@ -9,8 +10,12 @@ import os
 import requests
 sys.path.insert(0,'/usr/lib/chromium-browser/chromedriver')
 from selenium import webdriver
-chrome_options = webdriver.ChromeOptions()
+from shutil import which
+from selenium.webdriver.chrome.options import Options
+
+chrome_options = Options()
 chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
