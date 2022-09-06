@@ -42,10 +42,10 @@ while True:
     prev_len = len(names)
     count = count + 1
     try:
-        element=driver.find_element_by_xpath("//*[@id='__next']/div/div/div/main/div[2]/div/div/div[7]")
+        element=driver.find_element(By.XPATH,value="//*[@id='__next']/div/div/div/main/div[2]/div/div/div[7]")
         element.location_once_scrolled_into_view
     except:
-        element=driver.find_element_by_xpath("//*[@id='__next']/div/div/div/main/div[2]/div/div/div[6]")
+        element=driver.find_element(By.XPATH,value="//*[@id='__next']/div/div/div/main/div[2]/div/div/div[6]")
         element.location_once_scrolled_into_view
     sleep(1)
     soup = bs(driver.page_source,'html.parser')
@@ -63,19 +63,20 @@ while True:
                 pass
             else:
                 if 'English' in tags:
+                    print(name)
                     names.append(name)
         except:
             pass
     if len(names)== prev_len:
-        sleep(2.5)
+        sleep(3)
         print(f'scraping page: {count}.')
         prev_len = len(names)
         count = count + 1
         try:
-            element=driver.find_element_by_xpath("//*[@id='__next']/div/div/div/main/div[2]/div/div/div[7]")
+            element=driver.find_element(By.XPATH,value="//*[@id='__next']/div/div/div/main/div[2]/div/div/div[7]")
             element.location_once_scrolled_into_view
         except:
-            element=driver.find_element_by_xpath("//*[@id='__next']/div/div/div/main/div[2]/div/div/div[6]")
+            element=driver.find_element(By.XPATH,value="//*[@id='__next']/div/div/div/main/div[2]/div/div/div[6]")
             element.location_once_scrolled_into_view
         soup = bs(driver.page_source,'html.parser')
         divs = soup.find('div',attrs= {'role':'list'}).findAll('div')
@@ -92,6 +93,7 @@ while True:
                     pass
                 else:
                     if 'English' in tags:
+                        print(name)
                         names.append(name)
             except:
                 pass
