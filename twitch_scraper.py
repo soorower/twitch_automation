@@ -59,10 +59,12 @@ while True:
     for div in divs:
         try:
             name = div.findAll('p')[1].text
+            print(name)
             try:
                 tags = []
                 for tag in div.findAll('a',attrs ={'class':'ScTag-sc-xzp4i-0 kpyriW tw-tag'}):
                     tags.append(tag.text.strip())
+                print(tags)
             except:
                 tags = []
             if name in names:
