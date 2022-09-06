@@ -54,6 +54,7 @@ while True:
         element.location_once_scrolled_into_view
     sleep(1)
     soup = bs(driver.page_source,'html.parser')
+    print(soup)
     divs = soup.findAll('div',attrs= {'class':'Layout-sc-nxg1ff-0 kmugYy'})
     for div in divs:
         try:
