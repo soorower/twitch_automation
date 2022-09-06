@@ -54,25 +54,23 @@ while True:
         element.location_once_scrolled_into_view
     sleep(1)
     soup = bs(driver.page_source,'html.parser')
-    print(soup)
     divs = soup.findAll('div',attrs= {'class':'Layout-sc-nxg1ff-0 kmugYy'})
     for div in divs:
         try:
             name = div.findAll('p')[1].text
-            print(name)
             try:
                 tags = []
                 for tag in soup.select('a[class*="ScTag-sc-xzp4i-0"]'):
                     tags.append(tag.text.strip())
-                print(tags)
             except:
                 tags = []
             if name in names:
-                pass
+                tags = []
             else:
                 if 'English' in tags:
                     print(name)
                     names.append(name)
+                tags = []
         except:
             pass
     if len(names)== prev_len:
@@ -93,7 +91,7 @@ while True:
                 name = div.findAll('p')[1].text
                 try:
                     tags = []
-                    for tag in div.findAll('a',attrs ={'class':'ScTag-sc-xzp4i-0 kpyriW tw-tag'}):
+                    for tag in soup.select('a[class*="ScTag-sc-xzp4i-0"]'):
                         tags.append(tag.text.strip())
                 except:
                     tags = []
