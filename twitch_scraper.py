@@ -62,7 +62,7 @@ while True:
             print(name)
             try:
                 tags = []
-                for tag in div.findAll('a',attrs ={'class':'ScTag-sc-xzp4i-0 kpyriW tw-tag'}):
+                for tag in soup.select('a[class*="ScTag-sc-xzp4i-0"]'):
                     tags.append(tag.text.strip())
                 print(tags)
             except:
