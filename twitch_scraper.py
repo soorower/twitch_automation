@@ -5,23 +5,23 @@ import sys
 import gspread       
 from oauth2client.service_account import ServiceAccountCredentials
 import re
+import os
 import requests
 sys.path.insert(0,'/usr/lib/chromium-browser/chromedriver')
 from selenium import webdriver
 chrome_options = webdriver.ChromeOptions()
+chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
-# driver = webdriver.Chrome('chromedriver',options=chrome_options)
+driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"),chrome_options=chrome_options)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 
 
-import chromedriver_autoinstaller
-chromedriver_autoinstaller.install()
-driver = webdriver.Chrome()
+
 
 driver.maximize_window()
 
