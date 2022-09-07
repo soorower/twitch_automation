@@ -42,17 +42,18 @@ def scrape():
 
     names = []
     count = 1
+    profiles = []
     while True:
         print(f'scraping page: {count}')
         if count>7000:
             break
-        prev_len = len(names)
+        prev_len = len(profiles)
         count = count + 1
         try:
-            element=driver.find_element(By.XPATH,value="//*[@id='__next']/div/div/div/main/div[2]/div/div/div[7]")
+            element=driver.find_elements_by_xpath(f"//div[@role='list']/div")[-1]
             element.location_once_scrolled_into_view
         except:
-            element=driver.find_element(By.XPATH,value="//*[@id='__next']/div/div/div/main/div[2]/div/div/div[6]")
+            element=driver.find_elements_by_xpath(f"//div[@role='list']/div")[-1]
             element.location_once_scrolled_into_view
         sleep(1)
         soup = bs(driver.page_source,'html.parser')
@@ -60,6 +61,7 @@ def scrape():
         for div in divs:
             try:
                 name = div.findAll('p')[1].text
+                profiles.append(name)
                 try:
                     tags = []
                     for tag in div.select('a[class*="ScTag-sc-xzp4i-0"]'):
@@ -76,22 +78,24 @@ def scrape():
                     tags = []
             except:
                 pass
-        if len(names)== prev_len:
-            sleep(10)
+        if len(profiles)== prev_len:
+            sleep(5)
             print(f'scraping page: {count}.')
-            prev_len = len(names)
+            prev_len = len(profiles)
             count = count + 1
             try:
-                element=driver.find_element(By.XPATH,value="//*[@id='__next']/div/div/div/main/div[2]/div/div/div[7]")
+                element=driver.find_elements_by_xpath(f"//div[@role='list']/div")[-1]
                 element.location_once_scrolled_into_view
             except:
-                element=driver.find_element(By.XPATH,value="//*[@id='__next']/div/div/div/main/div[2]/div/div/div[6]")
+                element=driver.find_elements_by_xpath(f"//div[@role='list']/div")[-1]
                 element.location_once_scrolled_into_view
+            sleep(1)
             soup = bs(driver.page_source,'html.parser')
             divs = soup.find('div',attrs= {'role':'list'}).findAll('div')
             for div in divs:
                 try:
                     name = div.findAll('p')[1].text
+                    profiles.append(name)
                     try:
                         tags = []
                         for tag in div.select('a[class*="ScTag-sc-xzp4i-0"]'):
@@ -107,7 +111,7 @@ def scrape():
                             names.append(name)
                 except:
                     pass
-            if len(names)== prev_len:
+            if len(profiles)== prev_len:
                 print('No more profiles. So, scraping all profiles...')
                 break
 
