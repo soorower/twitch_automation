@@ -50,10 +50,10 @@ def scrape():
         prev_len = len(profiles)
         count = count + 1
         try:
-            element=driver.find_elements_by_xpath(f"//div[@role='list']/div")[-1]
+            element=driver.find_elements(By.XPATH,value =f"//div[@role='list']/div")[-1]
             element.location_once_scrolled_into_view
         except:
-            element=driver.find_elements_by_xpath(f"//div[@role='list']/div")[-1]
+            element=driver.find_elements(By.XPATH, value=f"//div[@role='list']/div")[-1]
             element.location_once_scrolled_into_view
         sleep(1)
         soup = bs(driver.page_source,'html.parser')
@@ -80,14 +80,14 @@ def scrape():
                 pass
         if len(profiles)== prev_len:
             sleep(5)
-            print(f'scraping page: {count}.')
+            print(f'scraping page: {count}..')
             prev_len = len(profiles)
             count = count + 1
             try:
-                element=driver.find_elements_by_xpath(f"//div[@role='list']/div")[-1]
+                element=driver.find_elements(By.XPATH,value = f"//div[@role='list']/div")[-1]
                 element.location_once_scrolled_into_view
             except:
-                element=driver.find_elements_by_xpath(f"//div[@role='list']/div")[-1]
+                element=driver.find_elements_by_xpath(By.XPATH,value = f"//div[@role='list']/div")[-1]
                 element.location_once_scrolled_into_view
             sleep(1)
             soup = bs(driver.page_source,'html.parser')
@@ -230,7 +230,6 @@ headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
 }
 while True:
-    scrape()
     r = requests.get('https://www.timeanddate.com/worldclock/bangladesh/dhaka',headers= headers)
     soup = bs(r.content, 'html.parser')
     time1 = soup.find('span',attrs= {'id':'ct'}).get_text().lower()
