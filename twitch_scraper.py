@@ -45,7 +45,7 @@ def scrape():
     profiles = []
     while True:
         print(f'scraping page: {count}')
-        if count>7000:
+        if count>1000:
             break
         prev_len = len(profiles)
         count = count + 1
@@ -238,24 +238,6 @@ while True:
     time = time1[:5]
     
     if 'am' in str(time1):
-        if '1:01' in str(time):
-            scrape()
-        if '1:02' in str(time):
-            scrape()
-        if '1:03' in str(time):
-            scrape()
-        if '1:04' in str(time):
-            scrape()
-        if '1:05' in str(time):
-            scrape()
-        if '1:06' in str(time):
-            scrape()
-        if '1:07' in str(time):
-            scrape()
-        if '1:08' in str(time):
-            scrape()
-        if '1:09' in str(time):
-            scrape()
         if '1:10' in str(time):
             scrape()
         if '1:11' in str(time):
@@ -265,5 +247,23 @@ while True:
         if '1:13' in str(time):
             scrape()
         if '1:14' in str(time):
+            scrape()
+        if '1:15' in str(time):
+            scrape()
+        if '1:16' in str(time):
+            scrape()
+        if '1:17' in str(time):
+            scrape()
+        if '1:18' in str(time):
+            scrape()
+        if '1:19' in str(time):
+            scrape()
+        if '1:20' in str(time):
+            scrape()
+        if '1:21' in str(time):
+            scrape()
+        if '1:22' in str(time):
+            scrape()
+        if '1:23' in str(time):
             scrape()
     sleep(179)
