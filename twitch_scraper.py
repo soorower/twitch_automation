@@ -45,7 +45,7 @@ def scrape():
     profiles = []
     while True:
         print(f'scraping page: {count}')
-        if count>1000:
+        if count>600:
             break
         prev_len = len(profiles)
         count = count + 1
@@ -230,7 +230,6 @@ headers = {
     'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
 }
 while True:
-    scrape()
     r = requests.get('https://www.timeanddate.com/worldclock/bangladesh/dhaka',headers= headers)
     soup = bs(r.content, 'html.parser')
     time1 = soup.find('span',attrs= {'id':'ct'}).get_text().lower()
