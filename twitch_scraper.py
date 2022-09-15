@@ -1,3 +1,5 @@
+
+
 from email import header
 from ssl import Options
 from time import sleep
@@ -204,7 +206,9 @@ def scrape():
         except:
             worksheet = sh.add_worksheet(title="Twitch CRM", rows=200000, cols=20)
         new_row_number = len(worksheet.col_values(1)) + 1
-
+        
+        worksheet2 = sh.worksheet("ff")
+        banned_users = worksheet2.col_values(3)[1:]
         list_to_add = []
         emails_on_sheet = worksheet.col_values(4)
         for ga,ur,us,em,ab in zip(games,urls,users,emails,abouts):
@@ -214,12 +218,15 @@ def scrape():
             elif em in emails_on_sheet:
                 pass
             else:
-                list_to.append(ga)
-                list_to.append(ur)
-                list_to.append(us)
-                list_to.append(em)
-                list_to.append(ab)
-                list_to_add.append(list_to)
+                if us in banned_users:
+                    pass
+                else:
+                    list_to.append(ga)
+                    list_to.append(ur)
+                    list_to.append(us)
+                    list_to.append(em)
+                    list_to.append(ab)
+                    list_to_add.append(list_to)
         worksheet.update(f'A{new_row_number}:E150000', list_to_add)
     except:
         print('Wrong google sheet name. Your sheet name should be "Twitch CRM". If you want to change sheet name, let me know...')
@@ -237,23 +244,23 @@ while True:
     time = time1[:5]
     
     if 'am' in str(time1):
-        if '1:10' in str(time):
+        if '10:45' in str(time):
             scrape()
-        if '1:11' in str(time):
+        if '10:46' in str(time):
             scrape()
-        if '1:12' in str(time):
+        if '10:47' in str(time):
             scrape()
-        if '1:13' in str(time):
+        if '10:48' in str(time):
             scrape()
-        if '1:14' in str(time):
+        if '10:49' in str(time):
             scrape()
-        if '1:15' in str(time):
+        if '10:50' in str(time):
             scrape()
-        if '1:16' in str(time):
+        if '10:51' in str(time):
             scrape()
-        if '1:17' in str(time):
+        if '10:52' in str(time):
             scrape()
-        if '1:18' in str(time):
+        if '10:53' in str(time):
             scrape()
         if '1:19' in str(time):
             scrape()
