@@ -1,6 +1,4 @@
 
-
-from email import header
 from ssl import Options
 from time import sleep
 import pandas as pd
@@ -13,7 +11,6 @@ import os
 import requests
 sys.path.insert(0,'/usr/lib/chromium-browser/chromedriver')
 from selenium import webdriver
-from shutil import which
 from selenium.webdriver.chrome.options import Options
 
 chrome_options = Options()
